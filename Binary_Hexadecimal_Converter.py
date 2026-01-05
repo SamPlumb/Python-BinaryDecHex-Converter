@@ -33,11 +33,46 @@ def binary_format(input):
     return binary
 
 
-# Converting -
+# Validate Binary Input
+def validate_binary(input):
+
+    input = user_input.replace(" ", "")
+
+    valid = True
+
+    for num in input:
+
+        if num != "0" and num != "1":
+
+            valid = False
+
+            break
+
+    return valid
+
+
+# Validate Hexadecimal Input
+def validate_hexadecimal(input):
+
+    valid_chars = "0123456789abcdefABCDEF"
+
+    valid = True
+
+    for char in input:
+
+        if char not in valid_chars:
+
+            valid = False
+
+            break
+
+    return valid
+
 
 # Binary to Decimal
-
 def binary_dec(input):
+
+    input = user_input.replace(" ", "")
 
     dec = 0
 
@@ -47,8 +82,7 @@ def binary_dec(input):
     return dec
 
 
-# Hexadecimal to Decimal -
-
+# Hexadecimal to Decimal
 def hex_dec(input):
 
     dec = int(input, 16)
@@ -56,8 +90,7 @@ def hex_dec(input):
     return dec
 
 
-# Dec to x
-
+# Decimal to Binary
 def dec_binary(input):
 
     binary = bin(int(input))
@@ -65,6 +98,7 @@ def dec_binary(input):
     return binary[2:]
 
 
+# Decimal to Hexadecimal
 def dec_hex(input):
 
     hexadecimal = hex(int(input))
@@ -72,225 +106,259 @@ def dec_hex(input):
     return hexadecimal[2:]
 
 
-# Main loop
+# Menus -
 
-start = True
-convert = False
-
-while start:
-
-    print("Binary / Hexadecimal / Decimal Converter")
+# Main Help Menu
+def main_help():
 
     print("Type 'convert' to convert between Binary, Hexadecimal, Decimal")
 
-    print("Type 'help' to display instructions")
+    # print("Type 'calculate' to perform any calculations with Binary, Hexadecimal or Decimal values")
 
     print("Type 'quit' to exit")
 
-    user_input = input()
 
-    if user_input.lower() == "quit":
+# Convert Help Menu
+def convert_help():
+
+    print("Binary to Decimal = btd")
+
+    print("Binary to Hexadecimal = bth")
+
+    print("Decimal to Binary = dtb")
+
+    print("Decimal to Hexadecimal = dth")
+
+    print("Hexadecimal to Binary = htb")
+
+    print("Hexadecimal to Decimal = htd")
+
+    print("Type 'quit' to exit")
+
+
+# Main Program Loop -
+
+# Initialise Variables
+running = True
+main_menu = True
+convert = False
+
+while running:
+
+    # Main Menu
+    if main_menu:
+
+        print("Binary / Hexadecimal / Decimal Converter")
+
+        main_help()
+
+        main_menu = False
+
+    user_input = input("What Operation Would You Like To Perform?").lower()
+
+    if user_input == "quit":
+
         exit()
 
-    elif user_input.lower() == "help":
+    elif user_input == "help":
 
-        print("Binary / Hexadecimal / Decimal Calculator")
+        main_help()
 
-        print("Type 'convert' to convert between Binary, Hexadecimal, Decimal")
+    elif user_input == "convert":
 
-        print("Type 'calculate' to perform any calculations with Binary, Hexadecimal or Decimal values")
-
-    elif user_input.lower() == "convert":
-        start = False
         convert = True
 
-        print("Binary to Decimal = btd")
+    # Converter
+    while convert:
 
-        print("Binary to Hexadecimal = bth")
+        user_input = input("What would you like to convert?").lower()
 
-        print("Decimal to Binary = dtb")
+        if user_input == "quit":
 
-        print("Decimal to Hexadecimal = dth")
+            exit()
 
-        print("Hexadecimal to Binary = htb")
+        elif user_input == "help":
 
-        print("Hexadecimal to Decimal = htd")
+            convert_help()
 
-        while convert:
+        # Binary To Decimal
+        elif user_input == "btd":
 
-            user_input = input("What would you like to convert?")
+            while convert:
 
-            if user_input.lower() == "quit":
-                exit()
+                user_input = input(
+                    "Enter Binary value to convert to Decimal:")
 
-            elif user_input.lower() == "help":
+                if user_input.lower() == "quit":
 
-                print("Binary to Decimal = btd")
+                    exit()
 
-                print("Binary to Hexadecimal = bth")
+                elif user_input.lower() == "help":
 
-                print("Decimal to Binary = dtb")
+                    convert_help()
 
-                print("Decimal to Hexadecimal = dth")
+                # Perform Conversion
+                elif validate_binary(user_input):
 
-                print("Hexadecimal to Binary = htb")
+                    print(
+                        f"'{user_input}' as a decimal value is: {binary_dec(user_input)}")
 
-                print("Hexadecimal to Decimal = htd")
+                    convert = False
 
-# Binary To Decimal -
+                else:
 
-            elif user_input.lower() == "btd":
+                    print(f"'{user_input}' is not a valid input. Try Again")
 
-                while convert:
+        # Binary To Hexadecimal
+        elif user_input == "bth":
 
-                    user_input = input(
-                        "Enter Binary value to convert to Decimal:")
+            while convert:
 
-                    b_input = user_input.replace(" ", "")
-                    valid_input = False
+                user_input = input(
+                    "Enter Binary value to convert to Hexadecimal:")
 
-                    if user_input.lower == "quit":
-                        exit()
+                if user_input.lower() == "quit":
 
-                    for num in b_input:
+                    exit()
 
-                        if num == "0" or num == "1":
+                elif user_input.lower() == "help":
 
-                            valid_input = True
+                    convert_help()
 
-                        else:
+                # Perform Conversion
+                if validate_binary(user_input):
 
-                            valid_input = False
+                    print(
+                        f"'{user_input}' as a Hexadecimal value is: {dec_hex(binary_dec(user_input))}")
 
-                            print(
-                                f"'{user_input}' is not a valid input. Try Again")
+                    convert = False
 
-                            break
+                else:
 
-                    if valid_input:
+                    print(f"'{user_input}' is not a valid input. Try Again")
 
-                        print(
-                            f"'{user_input}' as a decimal value is: {binary_dec(b_input)}")
+        # Decimal to Binary -
+        elif user_input == "dtb":
 
-                        start == True
-                        convert == False
-                        break
+            while convert:
 
-# Binary To Hexadecimal -
+                print("Enter Decimal value to convert to Binary:")
 
-            elif user_input.lower() == "bth":
+                user_input = input()
 
-                while convert:
+                if user_input.lower() == "quit":
 
-                    user_input = input(
-                        "Enter Binary value to convert to Hexadecimal:")
+                    exit()
 
-                    b_input = user_input.replace(" ", "")
-                    valid_input = False
+                elif user_input.lower() == "help":
 
-                    if user_input.lower == "quit":
-                        exit()
+                    convert_help()
 
-                    for num in b_input:
+                # Perform Conversion
+                elif user_input.isdigit():
 
-                        if num == "0" or num == "1":
+                    print(
+                        f"{user_input} as a binary value is: {binary_format(dec_binary(user_input))}")
 
-                            valid_input = True
+                    convert = False
 
-                        else:
+                else:
+                    print(f"'{user_input}' is not a valid input. Try Again")
 
-                            valid_input = False
+        # Decimal to Hexadecimal -
+        elif user_input.lower() == "dth":
 
-                            print(
-                                f"'{user_input}' is not a valid input. Try Again")
+            while convert:
 
-                            break
+                print("Enter Decimal value to convert to Hexadecimal:")
 
-                    if valid_input:
+                user_input = input()
 
-                        print(
-                            f"'{user_input}' as a Hexadecimal value is: {dec_hex(binary_dec(b_input))}")
+                if user_input.lower() == "quit":
 
-                        start == True
-                        convert == False
-                        break
+                    exit()
 
-# Decimal to Binary -
-            elif user_input.lower() == "dtb":
+                elif user_input.lower() == "help":
 
-                while convert:
+                    convert_help()
 
-                    print("Enter Decimal value to convert to Binary:")
+                # Perform Conversion
+                elif user_input.isdigit():
 
-                    user_input = input()
+                    print(
+                        f"{user_input} as a hexadecimal value is: {(dec_hex(user_input))}")
 
-                    if user_input.isdigit():
-                        print(
-                            f"{user_input} as a binary value is: {binary_format(dec_binary(user_input))}")
+                    convert = False
 
-                        start == True
-                        convert == False
-                        break
+                else:
+                    print(f"'{user_input}' is not a valid input. Try Again")
 
-                    else:
-                        print(f"'{user_input}' is not a valid input. Try Again")
+        # Hexadecimal to Binary -
+        elif user_input.lower() == "htb":
 
-# Decimal to Hexadecimal -
+            while convert:
 
-            elif user_input.lower() == "dth":
+                print("Enter Hexadecimal value to convert to Binary:")
 
-                while convert:
+                user_input = input()
 
-                    print("Enter Decimal value to convert to Hexadecimal:")
+                if user_input.lower() == "quit":
 
-                    user_input = input()
+                    exit()
 
-                    if user_input.isdigit():
-                        print(
-                            f"{user_input} as a binary value is: {(dec_hex(user_input))}")
+                elif user_input.lower() == "help":
 
-                        start == True
-                        convert == False
-                        break
+                    convert_help()
 
-                    else:
-                        print(f"'{user_input}' is not a valid input. Try Again")
-
-# Hexadecimal to Binary -
-
-            elif user_input.lower() == "htb":
-
-                while convert:
-                    print("Enter Hexadecimal value to convert to Binary:")
-
-                    user_input = input()
+                # Perform Conversion
+                elif validate_hexadecimal(user_input):
 
                     print(
                         f"{user_input} as a binary value is {binary_format(dec_binary(hex_dec(user_input)))}")
 
-                    start = True
                     convert = False
 
-# Hexadecimal to Decimal -
+                else:
 
-            elif user_input.lower() == "htd":
+                    print(f"'{user_input}' is not a valid input. Try Again")
 
-                while convert:
+        # Hexadecimal to Decimal -
+        elif user_input.lower() == "htd":
 
-                    print("Enter Hexadecimal value to convert to Decimal:")
+            while convert:
 
-                    user_input = input()
+                print("Enter Hexadecimal value to convert to Decimal:")
+
+                user_input = input()
+
+                if user_input.lower() == "quit":
+
+                    exit()
+
+                elif user_input.lower() == "help":
+
+                    convert_help()
+
+                # Perform Conversion
+                elif validate_hexadecimal(user_input):
 
                     print(
                         f"{user_input} as a binary value is: {(hex_dec(user_input))}")
 
-                    start == True
-                    convert == False
-                    break
+                    convert = False
 
-# Invalid Input -
+                else:
 
-            else:
-                print(f"'{user_input}' is not a valid input. Try Again")
+                    print(f"'{user_input}' is not a valid input. Try Again")
 
-                print("Type 'help' to display instructions")
+        # Invalid Input -
+        else:
+            print(f"'{user_input}' is not a valid input. Try Again")
+
+            print("Type 'help' to display instructions")
+
+    else:
+
+        print(f"'{user_input}' is not a valid input. Try Again")
+
+        print("Type 'help' to display instructions")
